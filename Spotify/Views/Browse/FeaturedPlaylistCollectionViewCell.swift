@@ -9,7 +9,7 @@ import UIKit
 
 class FeaturedPlaylistCollectionViewCell: UICollectionViewCell {
     static let identifier = "FeaturedPlaylistCollectionViewCell"
-    
+
     private let playlistCoverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
