@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController,UISearchResultsUpdating {
+class SearchViewController: UIViewController,UISearchResultsUpdating,UISearchBarDelegate {
 
 
     let searchController:UISearchController = {
@@ -48,6 +48,7 @@ class SearchViewController: UIViewController,UISearchResultsUpdating {
         view.backgroundColor = .systemBackground
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
         view.addSubview(collectionView)
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
         collectionView.delegate = self
@@ -68,12 +69,11 @@ class SearchViewController: UIViewController,UISearchResultsUpdating {
         
 
     }
+    
+    
     func updateSearchResults(for searchController: UISearchController) {
-        guard let resultsController = searchController.searchResultsController as? SearchResultsViewController,
-              let query = searchController.searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else {
-            return
-        }
-        print(query)
+        
+        
         //resultsController.update(with: results)
         // Perform search
         //APICaller.shared.search
@@ -81,6 +81,26 @@ class SearchViewController: UIViewController,UISearchResultsUpdating {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let resultsController = searchController.searchResultsController as? SearchResultsViewController,
+              let query = searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+//        resultsController.delegate = self
+
+        APICaller.shared.search(with: query) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+                    resultsController.update(with: results)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
 
