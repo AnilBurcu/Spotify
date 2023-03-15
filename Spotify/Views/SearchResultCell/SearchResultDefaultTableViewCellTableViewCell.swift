@@ -21,14 +21,15 @@ class SearchResultDefaultTableViewCell: UITableViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(label)
         contentView.addSubview(iconImageView)
+        contentView.addSubview(label)
+        
         contentView.clipsToBounds = true
         accessoryType = .disclosureIndicator
     }

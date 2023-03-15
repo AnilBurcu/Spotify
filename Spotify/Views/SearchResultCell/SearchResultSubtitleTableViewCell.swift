@@ -26,15 +26,16 @@ class SearchResultSubtitleTableViewCell: UITableViewCell {
 
     private let iconImageViewe: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(iconImageViewe)
         contentView.addSubview(label)
         contentView.addSubview(subtitleLabel)
-        contentView.addSubview(iconImageViewe)
+        
         contentView.clipsToBounds = true
         accessoryType = .disclosureIndicator
     }
