@@ -86,15 +86,15 @@ class AlbumViewController: UIViewController {
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         actionSheet.addAction(UIAlertAction(title: "Save Album", style: .default, handler: { [weak self] _ in
             guard let strongSelf = self else { return }
-//            APICaller.shared.saveAlbum(album: strongSelf.album) { success in
-////                if success {
-////                    HapticsManager.shared.vibrate(for: .success)
-////                    NotificationCenter.default.post(name: .albumSavedNotification, object: nil)
-////                }
-////                else {
-////                    HapticsManager.shared.vibrate(for: .error)
-////                }
-//            }
+            APICaller.shared.saveAlbum(album: strongSelf.album) { success in
+                if success {
+//                    HapticsManager.shared.vibrate(for: .success)
+                    NotificationCenter.default.post(name: .albumSavedNotification, object: nil)
+                }
+                else {
+//                    HapticsManager.shared.vibrate(for: .error)
+                }
+            }
         }))
 
         present(actionSheet, animated: true)
